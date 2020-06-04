@@ -16,7 +16,10 @@ require([
     zoom: 13
   });
 
-  let basemapToggle = new BasemapToggle({
+/*   basemap toggle functionality, add div#basemapGalleryDiv to html body
+
+
+    let basemapToggle = new BasemapToggle({ // a toggle feature for basemap 
     view: view,
     nextBasemap: "satellite"
   });
@@ -30,4 +33,8 @@ require([
     view.ui.add(basemapGallery, {
         position: "top-right"
     });
+
+    basemapToggle.visibleElements = {
+        title: false
+    }; */
 });
