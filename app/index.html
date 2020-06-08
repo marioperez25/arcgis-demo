@@ -1,28 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://js.arcgis.com/4.15/"></script>
-    
-    <title>arcgis demo app</title>
+  <title>My first Vue app</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://js.arcgis.com/4.15/"></script>
+  <script src="main.js"></script> 
 </head>
 <body>
-    <body>
-        <form>
-            <label for="territories">Regions:</label>
-            <select id="territories" name="territories" onchange="if (this.selectedIndex) mapCenterUpdate();">
-              <option value="-118.805,34.027">Region 1</option>
-              <option value="-117.168,32.776">Region 2</option>
-            </select>
-            <input type="submit">
-          </form>
-        <div id="myMap"></div>
+  <div id="app">
+    {{ message }}
+  </div>
 
-    </body>
+  <form>
+    <label for="territorySelector">Regions:</label>
+    </br>
+    <select id="territorySelector" name="territorySelector" >
+      <option value="-118.805,34.027" selected="selected" >Region 1</option>
+      <option value="-117.168,32.776">Region 2</option>
+      <option value="-116.168,31.776">Region 3</option>
+    </select>
+  </form>
 
-    <script src="main.js"></script>
+  <div id="myMap"></div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+  </script>
 </body>
 </html>
