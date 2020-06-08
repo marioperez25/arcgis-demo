@@ -11,10 +11,18 @@
 </head>
 <body>
     <body>
+        <form>
+            <label for="territories">Regions:</label>
+            <select id="territories" name="territories" onchange="if (this.selectedIndex) mapCenterUpdate();">
+              <option value="-118.805,34.027">Region 1</option>
+              <option value="-117.168,32.776">Region 2</option>
+            </select>
+            <input type="submit">
+          </form>
         <div id="myMap"></div>
 
     </body>
 
-    <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
