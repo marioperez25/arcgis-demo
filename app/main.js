@@ -3,62 +3,114 @@ let map;
 let initialPosition = [-118.805, 34.027];
 let mapContainer = "myMap";
 
-const territories = [
+let territories = [
   {
-    name: "Territory A",
+    id: 1000,
+    givenName: "Territory A",
     latitude: -118.805,
     longitude: 34.027,
     description: "this is territory A"
   },
   {
-    name: "Territory B",
+    id: 1001,
+    givenName: "Territory B",
     latitude: -117.168,
     longitude: 32.776,
     description: "this is territory B"
   },
   {
-    name: "Territory C",
+    id: 1002,
+    givenName: "Territory C",
     latitude: -116.168,
     longitude: 34.027,
     description: "this is territory C"
   }
 ]
 
-require([
-  // import widgets here
-  "esri/Map",
-  "esri/views/MapView"
-], function(
-  Map, // geographical representation
-  MapView) // view.angle of the Map
+let salesReps = [
   {
-    
-    map = new Map({
-      basemap: "gray-vector", // type of basemaps https://developers.arcgis.com/javascript/latest/api-reference/esri-Map.html#basemap
-    });
-    
-    view = new MapView({
-      container: mapContainer,
-      map: map,
-      zoom: 8,
-      center: initialPosition
-    });
+    id: 100,
+    givenName: 'Sam',
+    familyName: 'Porter',
+    telephone: '555-777-8888',
+    territoryId: 1001,
+    address: 'Captial Knot City'
+  },
+  {
+    id: 101,
+    givenName: 'Bridget',
+    familyName: 'Strand',
+    telephone: '555-777-8888',
+    territoryId: 1001
+  },
+  {
+    id: 103,
+    givenName: 'Robert',
+    familyName: 'Martin',
+    telephone: '555-777-8888',
+    territoryId: 1002
+  },
+  {
+    id: 104,
+    givenName: 'John',
+    familyName: 'Doe',
+    telephone: '555-777-8888',
+    territoryId: 1002
+  },
+  {
+    id: 105,
+    givenName: 'Robert',
+    familyName: 'Martin',
+    telephone: '555-777-8888',
+    territoryId: 1000
+  },
+  {
+    id: 106,
+    givenName: 'John',
+    familyName: 'Doe',
+    telephone: '555-777-8888',
+    territoryId: 1000
   }
-);
+];
+
+require(["esri/Map","esri/views/MapView"], function(Map,MapView){
+  map = new Map({
+    basemap: "gray-vector",
+  });
+  
+  view = new MapView({
+    container: mapContainer,
+    map: map,
+    zoom: 8,
+    center: initialPosition
+  });
+});
+
+function renderDropDown(){
+  var app = new Vue({
+    el: '#app',
+    data: {
+      selected: '',
+      currentMapCoordinate: '',
+      territories: territories,
+      salesReps: salesReps
+    },
+    methods: {
+      mapCenterUpdate(event) {
+          let coordinates = event.target.value.split(','); 
+          let longitude = parseFloat(coordinates[0]);
+          let latitude = parseFloat(coordinates[1]);
+          view.center = [longitude,latitude];
 
 
-function setDropDownListener(){
-  document.getElementById("territorySelector").addEventListener("change", mapCenterUpdate);
+          // view.zoom = 8;
+      }
+  }
+  });
 }
 
-function mapCenterUpdate() {
-  console.log(this);
-  let coordinates  =  this.value.split(','); 
-  let longitude = parseFloat(coordinates[0]);
-  let latitude = parseFloat(coordinates[1]);
-  view.center = [longitude,latitude];
-}
+
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  setDropDownListener();
+  renderDropDown();
 });

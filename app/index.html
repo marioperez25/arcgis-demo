@@ -10,28 +10,36 @@
 </head>
 <body>
   <div id="app">
-    {{ message }}
+
+    <select v-model="selected" @change="mapCenterUpdate($event)">
+      <option value="default" selected="selected" >Choose a Territory</option>
+      <option
+        v-for="territory in territories"
+        :key="territory.id"
+        v-bind:value="territory.latitude + ',' + territory.longitude"
+        >{{ territory.name }}</option>
+    </select>
+
+    <section>
+      <div id="myMap"></div>
+    </section>
+
+    <section class="salesReps">
+      <ul class="salesReps__cardList">
+        <li class="salesReps__cardListItem"
+          v-for="salesRep in salesReps"
+          :key="salesReps.name">
+          <div class="salesReps__card">
+            <p><span>Name:</span> {{ salesRep.givenName + ' ' + salesRep.familyName }}</p>
+            <p v-if="salesRep.telephone !== ''"><span>Phone:</span> {{ salesRep.telephone }}</p>
+            <p v-if="salesRep.address !== undefined "><span>Address:</span> {{ salesRep.address }}</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+    
   </div>
 
-  <form>
-    <label for="territorySelector">Regions:</label>
-    </br>
-    <select id="territorySelector" name="territorySelector" >
-      <option value="-118.805,34.027" selected="selected" >Region 1</option>
-      <option value="-117.168,32.776">Region 2</option>
-      <option value="-116.168,31.776">Region 3</option>
-    </select>
-  </form>
-
-  <div id="myMap"></div>
-
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Hello Vue!'
-      }
-    })
-  </script>
+  
 </body>
 </html>
