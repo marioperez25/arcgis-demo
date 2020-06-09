@@ -11,12 +11,12 @@
 <body>
   <div id="app">
 
-    <select v-model="selected" @change="mapCenterUpdate($event)">
+    <select @change="mapCenterUpdate($event)" v-model="currentTerritory">
       <option value="default" selected="selected" >Choose a Territory</option>
       <option
         v-for="territory in territories"
         :key="territory.id"
-        v-bind:value="territory.latitude + ',' + territory.longitude"
+        v-bind:value="territory.id"
         >{{ territory.name }}</option>
     </select>
 

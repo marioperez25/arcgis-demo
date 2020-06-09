@@ -2,27 +2,28 @@ let view;
 let map;
 let initialPosition = [-118.805, 34.027];
 let mapContainer = "myMap";
+let currentTerritoryId = "";
 
 let territories = [
   {
     id: 1000,
-    givenName: "Territory A",
-    latitude: -118.805,
+    name: "Territory A",
     longitude: 34.027,
+    latitude: -118.805,
     description: "this is territory A"
   },
   {
     id: 1001,
-    givenName: "Territory B",
-    latitude: -117.168,
+    name: "Territory B",
     longitude: 32.776,
+    latitude: -117.168,
     description: "this is territory B"
   },
   {
     id: 1002,
-    givenName: "Territory C",
-    latitude: -116.168,
+    name: "Territory C",
     longitude: 34.027,
+    latitude: -116.168,
     description: "this is territory C"
   }
 ]
@@ -89,27 +90,20 @@ require(["esri/Map","esri/views/MapView"], function(Map,MapView){
 function renderDropDown(){
   var app = new Vue({
     el: '#app',
-    data: {
-      selected: '',
-      currentMapCoordinate: '',
+    data: { 
       territories: territories,
-      salesReps: salesReps
+      salesReps: salesReps,
+      currentTerritory: ''
     },
     methods: {
       mapCenterUpdate(event) {
-          let coordinates = event.target.value.split(','); 
-          let longitude = parseFloat(coordinates[0]);
-          let latitude = parseFloat(coordinates[1]);
-          view.center = [longitude,latitude];
-
-
-          // view.zoom = 8;
+          currentTerritoryId = event.target.value;
+          let territory = territories.find(element => element.id == currentTerritoryId);
+          view.center = [territory.latitude, territory.longitude]; 
       }
   }
   });
 }
-
-
 
 window.addEventListener('DOMContentLoaded', (event) => {
   renderDropDown();
