@@ -1,8 +1,18 @@
 html, body, #myMap {
     padding: 0;
     margin: 0;
-    height: 500px;
-    width: 500px;
+}
+
+#myMap {
+    padding: 15px;
+    margin: 15px;
+    height: 200px;
+    margin: auto;
+}
+
+.outterContainer {
+    width: 600px;
+    margin: auto;
 }
 
 .salesReps {
@@ -21,9 +31,7 @@ html, body, #myMap {
 }
 
 .salesReps__card {
-    width: 200px;
-    height: 100px;
-    border: 1px solid blueviolet;
+    border: 1px solid black;
     padding: 15px;
     margin: 15px;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My first Vue app</title>
+  <title>repFinder</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css">
   <link rel="stylesheet" href="styles.css">
   <script src="https://unpkg.com/vue"></script>
@@ -9,9 +9,9 @@
   <script src="main.js"></script> 
 </head>
 <body>
-  <div id="app">
+  <div id="repFinder" class="outterContainer">
 
-    <select @change="mapCenterUpdate($event)" v-model="currentTerritory">
+    <select @change="territoryUpdate($event)" >
       <option value="default" selected="selected" >Choose a Territory</option>
       <option
         v-for="territory in territories"
@@ -32,7 +32,8 @@
           <div class="salesReps__card">
             <p><span>Name:</span> {{ salesRep.givenName + ' ' + salesRep.familyName }}</p>
             <p v-if="salesRep.telephone !== ''"><span>Phone:</span> {{ salesRep.telephone }}</p>
-            <p v-if="salesRep.address !== undefined "><span>Address:</span> {{ salesRep.address }}</p>
+            <p v-if="salesRep.email !== ''"><span>eMail:</span> {{ salesRep.email }}</p>
+            <p v-if="salesRep.address !== undefined"><span>Address:</span> {{ salesRep.address }}</p>
           </div>
         </li>
       </ul>

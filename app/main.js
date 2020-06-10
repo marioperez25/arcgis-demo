@@ -1,8 +1,11 @@
 let view;
 let map;
 let initialPosition = [-118.805, 34.027];
+let initialMapZoom = 8;
+let repsForDisplay = [];
 let mapContainer = "myMap";
-let currentTerritoryId = "";
+let selectedTerritoryId = "";
+
 
 let territories = [
   {
@@ -31,44 +34,51 @@ let territories = [
 let salesReps = [
   {
     id: 100,
-    givenName: 'Sam',
-    familyName: 'Porter',
+    givenName: 'rep1GivenName',
+    familyName: 'rep1FamilyName',
+    email: 'rep1@mail.com',
     telephone: '555-777-8888',
     territoryId: 1001,
-    address: 'Captial Knot City'
+    address: 'TEST ROADWAY NW'
   },
   {
     id: 101,
-    givenName: 'Bridget',
-    familyName: 'Strand',
+    givenName: 'rep2GivenName',
+    familyName: 'rep2FamilyName',
+    email: 'rep2@mail.com',
     telephone: '555-777-8888',
-    territoryId: 1001
+    territoryId: 1001,
+    address: '25th NW Test Drive'
   },
   {
     id: 103,
-    givenName: 'Robert',
-    familyName: 'Martin',
+    givenName: 'rep3GivenName',
+    familyName: 'rep3FamilyName',
+    email: 'rep3@mail.com',
     telephone: '555-777-8888',
     territoryId: 1002
   },
   {
     id: 104,
-    givenName: 'John',
-    familyName: 'Doe',
+    givenName: 'rep4GivenName',
+    familyName: 'rep4FamilyName',
+    email: 'rep4@mail.com',
     telephone: '555-777-8888',
     territoryId: 1002
   },
   {
     id: 105,
-    givenName: 'Robert',
-    familyName: 'Martin',
+    givenName: 'rep5GivenName',
+    familyName: 'rep5FamilyName',
+    email: 'rep5@mail.com',
     telephone: '555-777-8888',
     territoryId: 1000
   },
   {
     id: 106,
-    givenName: 'John',
-    familyName: 'Doe',
+    givenName: 'rep6GivenName',
+    familyName: 'rep6FamilyName',
+    email: 'rep1@mail.com',
     telephone: '555-777-8888',
     territoryId: 1000
   }
@@ -82,29 +92,43 @@ require(["esri/Map","esri/views/MapView"], function(Map,MapView){
   view = new MapView({
     container: mapContainer,
     map: map,
-    zoom: 8,
+    zoom: initialMapZoom,
     center: initialPosition
   });
 });
 
-function renderDropDown(){
-  var app = new Vue({
-    el: '#app',
+function centerMapAtTerritory(event){
+  selectedTerritoryId = event.target.value;
+  let territory = territories.find(element => element.id == selectedTerritoryId);
+  view.center = [territory.latitude, territory.longitude];
+  view.zoom = initialMapZoom;
+}
+
+function showTerritorySalesRep(event){
+  selectedTerritoryId = event.target.value;
+  repsForDisplay.length = 0;
+  salesReps.map( rep => {
+    rep.territoryId == selectedTerritoryId ?
+      repsForDisplay.push(rep) : null;
+  });
+}
+
+function renderRepFinder(){
+  var repFinder = new Vue({
+    el: '#repFinder',
     data: { 
       territories: territories,
-      salesReps: salesReps,
-      currentTerritory: ''
+      salesReps: repsForDisplay,
     },
     methods: {
-      mapCenterUpdate(event) {
-          currentTerritoryId = event.target.value;
-          let territory = territories.find(element => element.id == currentTerritoryId);
-          view.center = [territory.latitude, territory.longitude]; 
+      territoryUpdate(event) {
+        centerMapAtTerritory(event);
+        showTerritorySalesRep(event);
       }
   }
   });
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-  renderDropDown();
+  renderRepFinder();
 });
