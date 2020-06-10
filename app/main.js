@@ -2,7 +2,7 @@ let view;
 let map;
 let initialPosition = [-118.805, 34.027];
 let repsForDisplay = [];
-const initialMapZoom = 8;
+const initialMapZoom = 6;
 const mapContainer = "myMap";
 const territories = [
   {
@@ -10,21 +10,21 @@ const territories = [
     name: "Territory A",
     longitude: 34.027,
     latitude: -118.805,
-    description: "this is territory A"
+    description: "description for territory A"
   },
   {
     id: 1001,
     name: "Territory B",
     longitude: 32.776,
     latitude: -117.168,
-    description: "this is territory B"
+    description: "description for territory B"
   },
   {
     id: 1002,
     name: "Territory C",
     longitude: 34.027,
     latitude: -116.168,
-    description: "this is territory C"
+    description: "description for territory C"
   }
 ];
 const salesReps = [
@@ -80,6 +80,14 @@ const salesReps = [
   }
 ];
 
+let selectedTerritory = {
+  id: 0,
+  name: '',
+  longitude: 0,
+  latitude: 0,
+  description: ''
+}
+
 require(["esri/Map","esri/views/MapView"], function(Map,MapView){
   map = new Map({
     basemap: "gray-vector",
@@ -93,11 +101,13 @@ require(["esri/Map","esri/views/MapView"], function(Map,MapView){
   });
 });
 
-function centerMapAtTerritory(event){
+function updateTerritoryInfo(event){
   let selectedTerritoryId = event.target.value;
   let territory = territories.find(element => element.id == selectedTerritoryId);
   view.center = [territory.latitude, territory.longitude];
   view.zoom = initialMapZoom;
+  selectedTerritory.name = territory.name;
+  selectedTerritory.description = territory.description;
 }
 
 function showTerritorySalesRep(event){
@@ -115,10 +125,11 @@ function renderRepFinder(){
     data: { 
       territories: territories,
       salesReps: repsForDisplay,
+      selectedTerritory: selectedTerritory
     },
     methods: {
       territoryUpdate(event) {
-        centerMapAtTerritory(event);
+        updateTerritoryInfo(event);
         showTerritorySalesRep(event);
       }
     }

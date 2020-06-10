@@ -11,6 +11,12 @@
 <body>
   <div id="repFinder" class="outterContainer">
 
+    <section>
+      <h1 v-if="selectedTerritory.name">{{ selectedTerritory.name }}</h1>
+      <h1 v-else>Default Title</h1>
+      <p>{{ selectedTerritory.description }}</p>
+    </section>
+
     <select @change="territoryUpdate($event)" >
       <option value="default" selected="selected" >Choose a Territory</option>
       <option
