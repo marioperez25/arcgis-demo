@@ -1,8 +1,8 @@
 let view;
 let map;
 let initialPosition = [-118.805, 34.027];
-const initialMapZoom = 8;
 let repsForDisplay = [];
+const initialMapZoom = 8;
 const mapContainer = "myMap";
 const territories = [
   {
