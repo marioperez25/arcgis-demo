@@ -1,13 +1,10 @@
 let view;
 let map;
 let initialPosition = [-118.805, 34.027];
-let initialMapZoom = 8;
+const initialMapZoom = 8;
 let repsForDisplay = [];
-let mapContainer = "myMap";
-let selectedTerritoryId = "";
-
-
-let territories = [
+const mapContainer = "myMap";
+const territories = [
   {
     id: 1000,
     name: "Territory A",
@@ -29,9 +26,8 @@ let territories = [
     latitude: -116.168,
     description: "this is territory C"
   }
-]
-
-let salesReps = [
+];
+const salesReps = [
   {
     id: 100,
     givenName: 'rep1GivenName',
@@ -98,14 +94,14 @@ require(["esri/Map","esri/views/MapView"], function(Map,MapView){
 });
 
 function centerMapAtTerritory(event){
-  selectedTerritoryId = event.target.value;
+  let selectedTerritoryId = event.target.value;
   let territory = territories.find(element => element.id == selectedTerritoryId);
   view.center = [territory.latitude, territory.longitude];
   view.zoom = initialMapZoom;
 }
 
 function showTerritorySalesRep(event){
-  selectedTerritoryId = event.target.value;
+  let selectedTerritoryId = event.target.value;
   repsForDisplay.length = 0;
   salesReps.map( rep => {
     rep.territoryId == selectedTerritoryId ?
@@ -125,7 +121,7 @@ function renderRepFinder(){
         centerMapAtTerritory(event);
         showTerritorySalesRep(event);
       }
-  }
+    }
   });
 }
 
